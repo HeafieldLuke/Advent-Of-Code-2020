@@ -7,6 +7,11 @@ defmodule Day2 do
         end
     end
 
+    def process_passwords(body) do
+        String.split(body, "\n")
+        |> Enum.map(fn x -> parse_password(x) end)
+    end
+
     def parse_password(pass) do
         [range | [ letter | [ pass | _ ]]] = String.split(pass, " ")
         [low | [ high | _ ]] = String.split(range, "-")
@@ -19,11 +24,7 @@ defmodule Day2 do
         }
     end
 
-    def process_passwords(body) do
-        String.split(body, "\n")
-        |> Enum.map(fn x -> parse_password(x) end)
-    end
-
+    
     def start() do
         input = read_file()
         IO.puts(part1(input))

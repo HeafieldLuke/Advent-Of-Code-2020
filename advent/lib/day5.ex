@@ -16,14 +16,12 @@ defmodule Day5 do
     def part1(input) do
         input
         |> Enum.map(fn x -> locate_seat(x) end)
-        |> IO.inspect
         |> find_highest_seat
     end
 
     def locate_seat(seat) do
             a = String.slice(seat, 0..6) |> String.graphemes |> setup_search(127, {"F", "B"})
             b = String.slice(seat, 7..String.length(seat)) |> String.graphemes |> setup_search(7, {"L", "R"})
-            IO.puts("#{a}, #{b}")
             {a,b}
     end
 
@@ -59,7 +57,12 @@ defmodule Day5 do
     def seat_id({ row, column }), do: row * 8 + column
 
     def part2(input) do
-        IO.puts("Hi")
+        seats = input
+                |> Enum.map(fn x -> locate_seat(x) end)
+                |> Enum.map(fn x -> seat_id(x) end)
+
+        Enum.to_list(Enum.min(seats)..Enum.max(seats))
+        |> Enum.find(fn x -> not Enum.member?(seats, x) end)
     end
 
 end

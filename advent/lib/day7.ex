@@ -47,6 +47,16 @@ defmodule Day7 do
         do: find(rules, rest, color) || find(rules, Map.get(rules, child_color, []), color)
 
     def part2(input) do
-        IO.puts("Not yet implemented")
+        count_bags(input, "shiny gold") - 1
+    end
+
+    def count_bags(rules, color) do
+        Map.get(rules, color, [])
+        |> Enum.reduce(1, fn {count, color}, acc -> 
+            case count == "no" do
+                true -> acc * count_bags(rules,color)
+                false -> acc + String.to_integer(count) * count_bags(rules, color)
+            end
+        end)
     end
 end
